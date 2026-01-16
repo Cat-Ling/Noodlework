@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "pages:build": "npx @cloudflare/next-on-pages",
     "start": "next start",
     "lint": "eslint",
     "worker:dev": "wrangler dev workers/proxy.js",
@@ -29,6 +30,7 @@
     "undici": "^7.18.2"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
