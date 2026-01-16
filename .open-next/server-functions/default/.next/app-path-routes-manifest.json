@@ -1,0 +1,14 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/api/now/route": "/api/now",
+  "/api/proxy/route": "/api/proxy",
+  "/api/search/route": "/api/search",
+  "/api/suggestions/route": "/api/suggestions",
+  "/api/video/route": "/api/video",
+  "/api/vote/route": "/api/vote",
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/",
+  "/search/page": "/search",
+  "/watch/[id]/page": "/watch/[id]"
+}
