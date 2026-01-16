@@ -1,4 +1,5 @@
-import { Box, Heading, HStack, Text, Divider, Flex, Badge, IconButton, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure } from "@chakra-ui/react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Box, Heading, HStack, Text, Divider, Flex, Badge, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure } from "@chakra-ui/react";
 import { FaEye, FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';

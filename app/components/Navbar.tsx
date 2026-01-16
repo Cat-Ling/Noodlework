@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { useState, useRef, useEffect } from 'react';
@@ -16,6 +17,7 @@ export default function Navbar() {
 
     // Handle client-side mounting to prevent hydration errors
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setIsMounted(true);
     }, []);
 

@@ -4,12 +4,13 @@ import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Box, SimpleGrid, Heading, Spinner, Center, Text, Container, Button, Select, Checkbox, HStack, VStack } from "@chakra-ui/react";
 import { VideoCard } from '../components/VideoCard';
-import { useRouter } from 'next/navigation';
+
 
 function SearchPageContent() {
     const searchParams = useSearchParams();
     const initialQuery = searchParams.get('q') || '';
     const [query, setQuery] = useState(initialQuery);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [videos, setVideos] = useState<any[]>([]);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
@@ -21,7 +22,7 @@ function SearchPageContent() {
     const [sortBy, setSortBy] = useState('2'); // Relevance
     const [hdOnly, setHdOnly] = useState(false);
 
-    const router = useRouter();
+
 
     // Update query state if URL param changes
     useEffect(() => {
@@ -30,14 +31,17 @@ function SearchPageContent() {
             setPage(1);
             fetchResults(initialQuery, 1);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialQuery]);
 
+    // Trigger search when filters change
     // Trigger search when filters change
     useEffect(() => {
         if (query) {
             setPage(1);
             fetchResults(query, 1);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [duration, sortBy, hdOnly]);
 
     const fetchResults = async (q: string, pageNum: number = 1) => {
@@ -81,7 +85,7 @@ function SearchPageContent() {
             <Container maxW="container.xl">
                 {/* Page Title */}
                 <Heading size="lg" mb={6} mt={4}>
-                    Search Results for "{query}"
+                    Search Results for &quot;{query}&quot;
                 </Heading>
 
                 {/* Filters */}

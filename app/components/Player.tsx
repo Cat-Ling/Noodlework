@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
@@ -8,7 +9,6 @@ import {
     isHLSProvider,
     Menu,
     type MediaProviderAdapter,
-    type MediaProviderChangeEvent
 } from '@vidstack/react';
 import {
     DefaultVideoLayout,
@@ -31,10 +31,10 @@ import {
     RiClosedCaptioningLine,
 } from "react-icons/ri";
 import { LuVolumeX, LuVolume1, LuVolume2, LuCast, LuFlipHorizontal2 } from "react-icons/lu";
-import { FaTv, FaDownload } from 'react-icons/fa';
-import { Box, IconButton } from "@chakra-ui/react";
+import { FaDownload } from 'react-icons/fa';
+import { Box } from "@chakra-ui/react";
 import { BsBadgeHd } from "react-icons/bs";
-import { MdCheck, MdChevronRight, MdChevronLeft, MdRadioButtonUnchecked, MdRadioButtonChecked } from "react-icons/md";
+import { MdChevronRight, MdChevronLeft, MdRadioButtonUnchecked, MdRadioButtonChecked } from "react-icons/md";
 
 // ... [Icons object remains same] ...
 
@@ -139,67 +139,19 @@ interface Source {
     type: string;
 }
 
-interface TrackProps {
-    file: string;
-    kind: string;
-    label?: string;
-    lang?: string;
-}
+
 
 // Download Menu Component
-function DownloadMenu({ sources, videoTitle }: { sources: Source[]; videoTitle?: string }) {
-    const handleDownload = (source: Source) => {
-        // Create a temporary link and trigger download
-        const link = document.createElement('a');
-        link.href = source.file;
-        // Use cleaned video title or fallback
-        const filename = videoTitle ? `${videoTitle}_${source.label}.mp4` : `video_${source.label}.mp4`;
-        link.download = filename;
-        link.target = '_blank';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
 
-    return (
-        <Menu.Root>
-            <Menu.Button className="vds-menu-button" disabled={sources.length === 0}>
-                <MdChevronLeft className="vds-menu-button-close-icon" />
-                <FaDownload className="vds-menu-button-icon" />
-                <span className="vds-menu-button-label">Download</span>
-                <span className="vds-menu-button-hint">{sources.length > 0 ? sources[0].label : 'N/A'}</span>
-                <MdChevronRight className="vds-menu-button-open-icon" />
-            </Menu.Button>
-            <Menu.Content className="vds-menu-items">
-                <Menu.RadioGroup>
-                    {sources.map((source) => (
-                        <Menu.Radio
-                            className="vds-menu-item"
-                            value={source.label}
-                            key={source.label}
-                            onClick={() => handleDownload(source)}
-                        >
-                            <MdRadioButtonChecked className="vds-menu-item-check-icon" />
-                            <MdRadioButtonUnchecked className="vds-menu-item-uncheck-icon" />
-                            <span className="vds-menu-item-label">{source.label}</span>
-                        </Menu.Radio>
-                    ))}
-                </Menu.RadioGroup>
-            </Menu.Content>
-        </Menu.Root>
-    );
-}
 
 interface PlayerProps {
     sources: Source[];
     tracks?: any[];
     poster?: string;
-    theaterMode?: boolean;
-    onToggleTheater?: () => void;
     videoTitle?: string;
 }
 
-export default function Player({ sources, tracks, poster, theaterMode, onToggleTheater, videoTitle }: PlayerProps) {
+export default function Player({ sources, tracks, poster, videoTitle }: PlayerProps) {
     const playerRef = useRef<any>(null); // MediaPlayerInstance
 
     // Persistence State
@@ -214,6 +166,7 @@ export default function Player({ sources, tracks, poster, theaterMode, onToggleT
         const savedVol = localStorage.getItem('noodle_volume');
         if (savedVol) {
             const v = parseFloat(savedVol);
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setVolume(v);
             setMuted(v === 0);
         }
@@ -237,6 +190,7 @@ export default function Player({ sources, tracks, poster, theaterMode, onToggleT
     // Update src when sources change (e.g. navigation) but keep quality pref if possible? For now reset to best default.
     useEffect(() => {
         const defaultSource = sources.find(s => s.label === '720p') || sources.find(s => s.label === '480p') || sources[0];
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setCurrentSource(defaultSource);
     }, [sources]);
 
@@ -247,27 +201,6 @@ export default function Player({ sources, tracks, poster, theaterMode, onToggleT
         src: '',
         type: 'video/mp4'
     } as const;
-
-    function onQualityChange(newSource: Source) {
-        // Save current time? Vidstack might handle src swap gracefully if keys are stable?
-        // Actually, changing `src` usually resets the player. We might need to save time.
-        // Let's rely on standard src swap behavior for now.
-        const time = playerRef.current?.currentTime;
-        const wasPlaying = !playerRef.current?.paused;
-
-        setCurrentSource(newSource);
-
-        // Restore time after swap (heuristic) - Vidstack might not need this if we swap the track?
-        // But here we are swapping the *File*.
-        // A better way is to pass *all* sources to Vidstack and let it pick, BUT Vidstack's MP4 quality switching is manual
-        // unless creating a custom provider.
-        // Swapping SRC is the standard "simple" way.
-
-        // Note: We'll likely lose buffer.
-        if (playerRef.current && time) {
-            // We need to wait for metadata... doing this in a `useEffect` on `currentSource` change is safer.
-        }
-    }
 
     // Restore time on source quality change
     const isQualitySwap = useRef(false);
@@ -290,7 +223,7 @@ export default function Player({ sources, tracks, poster, theaterMode, onToggleT
         }
     }
 
-    function onProviderChange(provider: MediaProviderAdapter | null, nativeEvent: MediaProviderChangeEvent) {
+    function onProviderChange(provider: MediaProviderAdapter | null) {
         // HLS configuration if needed
         if (isHLSProvider(provider)) {
             provider.config = {

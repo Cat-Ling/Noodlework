@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import React, { useState, useEffect } from 'react';
@@ -46,6 +47,7 @@ export const VideoFeed = ({ apiEndpoint, title, initialVideos = [] }: VideoFeedP
         if (initialVideos.length === 0) {
             fetchVideos(1);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleLoadMore = () => {

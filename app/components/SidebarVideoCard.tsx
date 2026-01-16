@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
-import { Box, Image, Text, Flex, LinkBox, LinkOverlay, AspectRatio, Skeleton } from "@chakra-ui/react";
+import { Box, Image, Text, Flex, LinkBox, LinkOverlay, AspectRatio } from "@chakra-ui/react";
 import NextLink from 'next/link';
 
 interface SidebarVideoCardProps {

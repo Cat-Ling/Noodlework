@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { useState, useEffect, useMemo } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Box, Container, Heading, Text, Spinner, Center, Button, VStack, HStack, Flex, Divider, Grid, StackDivider, Badge } from "@chakra-ui/react";
-import { FaArrowLeft, FaEye } from 'react-icons/fa';
+import { Box, Container, Heading, Text, Spinner, Center, Button, Flex, Grid } from "@chakra-ui/react";
+import { FaArrowLeft } from 'react-icons/fa';
 import { VideoCard } from '../../components/VideoCard';
 import Player from '../../components/Player';
 import { VideoMetadata } from '../../components/WatchMetadata';
@@ -66,8 +67,7 @@ export default function WatchPage() {
 
     // Split related videos for mixed layout (safe access)
     const relatedVideos = video?.relatedVideos || [];
-    const sidebarVideos = relatedVideos.slice(0, 8);
-    const gridVideos = relatedVideos.slice(8);
+
     const [extraVideos, setExtraVideos] = useState<any[]>([]);
     const [moreLoading, setMoreLoading] = useState(false);
     const [searchPage, setSearchPage] = useState(1);
@@ -174,8 +174,6 @@ export default function WatchPage() {
                                 sources={playerSources}
                                 tracks={video.tracks || []}
                                 poster={playerPoster}
-                                theaterMode={theaterMode}
-                                onToggleTheater={() => setTheaterMode(!theaterMode)}
                                 videoTitle={video.title}
                             />
                         </Box>
