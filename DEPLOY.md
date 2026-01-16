@@ -15,16 +15,23 @@ git remote add origin https://github.com/YOUR_USERNAME/noodle-privacy.git
 git push -u origin main
 ```
 
-### 2. Deploy to Cloudflare Pages
+### 2. Deploy to Vercel (Recommended for Next.js 16)
 
-1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com/)
-2. Click **Workers & Pages** → **Create Application**
-3. Select **Pages** tab → **Connect to Git**
-4. Authorize GitHub and select your `noodle-privacy` repository
-5. **Use default settings** - Don't change anything!
-   - Build command: `npm run build` (default)
-   - Build output: `.vercel/output/static` (default)
-6. Click **Save and Deploy**
+1. Go to [Vercel](https://vercel.com/)
+2. Click **Add New** → **Project**
+3. Import your GitHub repository
+4. Click **Deploy** (Vercel auto-detects everything!)
+
+**Your site will be live at:** `https://your-project.vercel.app`
+
+### Alternative: Deploy to Cloudflare Pages
+
+> **Note:** Cloudflare Pages doesn't fully support Next.js 16 yet. Use Vercel for best compatibility.
+
+If you still want to use Cloudflare Pages:
+1. The `functions/` directory contains Cloudflare Functions for the proxy
+2. These will work independently of the Next.js app
+3. You can deploy just the functions to Cloudflare Workers
 
 ### 3. Done! 🎉
 
@@ -78,9 +85,9 @@ Cloudflare Pages automatically:
 ## Troubleshooting
 
 ### Build fails
-- Use **default settings** - don't change build command
-- Build command: `npm run build` (runs Cloudflare Pages build automatically)
-- Build output: `.vercel/output/static`
+- Select **Next.js (Static HTML Export)** as framework preset
+- Build command: `npm run build` (default)
+- Build output: `out` (Cloudflare auto-detects this)
 - Root directory: (leave empty)
 
 ### API routes not working

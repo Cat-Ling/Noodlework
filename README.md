@@ -4,12 +4,13 @@ A privacy-focused video streaming platform. Deploy to Cloudflare Pages with one 
 
 ## 🚀 Quick Deploy
 
-1. **Push to GitHub**
-2. **Connect to Cloudflare Pages**
-3. **Use default settings** (don't change anything!)
-4. **Deploy!**
+**Recommended: Deploy to Vercel** (Full Next.js 16 support)
 
-That's it! See [DEPLOY.md](./DEPLOY.md) for details.
+1. Push to GitHub
+2. Go to [Vercel](https://vercel.com/) → Import Project
+3. Select your repo → Deploy
+
+**Alternative: Use Cloudflare Functions** for just the proxy (see [DEPLOY.md](./DEPLOY.md))
 
 ## ✨ Features
 
