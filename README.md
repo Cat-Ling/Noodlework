@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Noodle Privacy
 
-## Getting Started
+A privacy-focused video streaming platform built with Next.js and Cloudflare Workers.
 
-First, run the development server:
+## Features
+
+- 🎥 Video streaming with quality selection
+- 🔄 Automatic retry logic for reliable playback
+- 🌍 Cloudflare Workers for global edge caching
+- 📱 Mobile-responsive design
+- ⚡ Concurrent connection pooling for extreme performance
+- 🎨 Modern UI with Chakra UI
+
+## Quick Start
+
+### Local Development
 
 ```bash
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Deploy to Cloudflare Workers (Recommended)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Offload bandwidth costs by deploying the proxy to Cloudflare Workers:
 
-## Learn More
+1. **Push to GitHub:**
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git remote add origin https://github.com/YOUR_USERNAME/noodle-privacy.git
+   git push -u origin main
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. **Deploy via Cloudflare Dashboard:**
+   - Go to [Cloudflare Dashboard](https://dash.cloudflare.com/)
+   - Click **Workers & Pages** → **Create Application**
+   - Select **Pages** → **Connect to Git**
+   - Select your repository
+   - Deploy!
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Update Environment Variables:**
+   ```bash
+   cp .env.example .env.local
+   # Add your worker URL to .env.local
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+See [CLOUDFLARE_SETUP.md](./CLOUDFLARE_SETUP.md) for detailed instructions.
 
-## Deploy on Vercel
+## Tech Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Frontend:** Next.js 16, React 18, Chakra UI
+- **Video Player:** Vidstack
+- **Proxy:** Cloudflare Workers (optional) or Next.js API routes
+- **Styling:** Emotion, Framer Motion
+- **HTTP Client:** Undici (connection pooling)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project Structure
+
+```
+├── app/
+│   ├── api/              # Next.js API routes (fallback)
+│   │   ├── proxy/        # Video/image proxy
+│   │   ├── video/        # Video metadata
+│   │   └── search/       # Search functionality
+│   ├── components/       # React components
+│   └── watch/            # Video player page
+├── workers/
+│   └── proxy.js          # Cloudflare Worker script
+├── wrangler.toml         # Cloudflare Workers config
+└── CLOUDFLARE_SETUP.md   # Deployment guide
+```
+
+## Scripts
+
+```bash
+npm run dev              # Start Next.js dev server
+npm run build            # Build for production
+npm run start            # Start production server
+
+npm run worker:dev       # Test Cloudflare Worker locally
+npm run worker:deploy    # Deploy to Cloudflare Workers
+npm run worker:tail      # View worker logs
+```
+
+## Environment Variables
+
+Create `.env.local`:
+
+```env
+# Optional: Cloudflare Worker URL (for offloading bandwidth)
+NEXT_PUBLIC_WORKER_URL=https://your-worker.workers.dev
+```
+
+## Performance
+
+- **Concurrent Connections:** 50+ simultaneous video streams
+- **Connection Pooling:** HTTP/2 with pipelining
+- **Retry Logic:** Automatic recovery from failures
+- **Caching:** 24-hour video cache, 1-hour image cache
+- **Bandwidth:** Offloaded to Cloudflare (free tier: 100k requests/day)
+
+## License
+
+MIT
+
+## Contributing
+
+Pull requests welcome! Please read the contribution guidelines first.
