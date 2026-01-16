@@ -21,11 +21,9 @@ git push -u origin main
 2. Click **Workers & Pages** → **Create Application**
 3. Select **Pages** tab → **Connect to Git**
 4. Authorize GitHub and select your `noodle-privacy` repository
-5. Configure build settings:
-   - **Framework preset**: Next.js
-   - **Build command**: `npx @cloudflare/next-on-pages`
-   - **Build output directory**: `.vercel/output/static`
-   - **Environment variables**: (leave empty for now)
+5. **Use default settings** - Don't change anything!
+   - Build command: `npm run build` (default)
+   - Build output: `.vercel/output/static` (default)
 6. Click **Save and Deploy**
 
 ### 3. Done! 🎉
@@ -80,9 +78,10 @@ Cloudflare Pages automatically:
 ## Troubleshooting
 
 ### Build fails
-- Make sure you selected **Next.js** as framework preset
-- Build command should be: `npx @cloudflare/next-on-pages`
+- Use **default settings** - don't change build command
+- Build command: `npm run build` (runs Cloudflare Pages build automatically)
 - Build output: `.vercel/output/static`
+- Root directory: (leave empty)
 
 ### API routes not working
 - Check that `functions/` directory exists

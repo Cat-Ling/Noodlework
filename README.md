@@ -4,15 +4,12 @@ A privacy-focused video streaming platform. Deploy to Cloudflare Pages with one 
 
 ## 🚀 Quick Deploy
 
-1. **Fork/Clone this repo**
-2. **Push to your GitHub**
-3. **Connect to Cloudflare Pages**
-   - Framework: Next.js
-   - Build command: `npx @cloudflare/next-on-pages`
-   - Build output: `.vercel/output/static`
+1. **Push to GitHub**
+2. **Connect to Cloudflare Pages**
+3. **Use default settings** (don't change anything!)
 4. **Deploy!**
 
-See [DEPLOY.md](./DEPLOY.md) for detailed instructions.
+That's it! See [DEPLOY.md](./DEPLOY.md) for details.
 
 ## ✨ Features
 
